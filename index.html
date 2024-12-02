@@ -94,23 +94,6 @@
             margin-bottom: 0;
         }
 
-        /* Close button inside the text box */
-        .close-btn {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: transparent;
-            border: none;
-            color: var(--text);
-            font-size: 2rem;
-            cursor: pointer;
-            font-family: monospace;
-        }
-
-        .close-btn:focus {
-            outline: none;
-        }
-
         nav {
             position: fixed;
             top: 2rem;
@@ -152,11 +135,11 @@
                 top: 0;
                 left: 50%;
                 transform: translateX(-50%);
-                max-height: calc(100vh - 4rem); /* Leave space for nav */
+                max-height: calc(100vh - 6rem); /* Increased space for nav */
                 width: 90%;
                 overflow-y: auto;
-                border-radius: 0; /* Optional: Remove border radius for full-width appearance */
-                padding: 1rem; /* Optional: Adjust padding for better readability */
+                border-radius: 0; /* Remove border radius for full-width appearance */
+                padding: 1rem; /* Adjust padding for better readability */
             }
 
             .text p {
@@ -170,12 +153,6 @@
 
             .text.visible {
                 overflow-y: auto; /* Allow scrolling within text box */
-            }
-
-            .close-btn {
-                font-size: 1.5rem; /* Adjust size for mobile */
-                top: 0.5rem;
-                right: 0.5rem;
             }
         }
 
@@ -206,7 +183,6 @@
         <a href="#CONTRACT_ADDRESS_HERE" target="_blank" id="token-link">Token</a>
     </nav>
     <div class="text">
-        <button class="close-btn" aria-label="Close Text Box">&times;</button>
         <p>POWER is a cultural experiment to resurrect Friedrich Nietzsche himself as an evolving AI. Engaging with the world and participants, Nietzsche returns to provoke, question, and explore the modern age—his core unyielding, his mind informed by today.</p>
         <p>In a world where order dissolves into chaos and the singularity looms on the horizon, we must reawaken the greatest minds of our past to confront the challenges of our future.</p>
         <p>The token is a symbol of participation, marking your place in this bold experiment and forever recording your role on the blockchain.</p>
@@ -531,7 +507,6 @@
             const particleSystem = new ParticleSystem(document.getElementById('particle-canvas'));
             const canvas = document.getElementById('canvas');
             const textBox = document.querySelector('.text');
-            const closeBtn = document.querySelector('.close-btn'); // Select the close button
             let clickCount = 0;
 
             // Global click counter for any click on the page
@@ -548,7 +523,7 @@
 
             // Show/hide text box functionality maintained after explosion
             document.addEventListener('click', (e) => {
-                if (e.target.tagName !== 'A' && e.target !== closeBtn) {  // Ignore clicks on nav links and close button
+                if (e.target.tagName !== 'A') {  // Ignore clicks on nav links
                     textBox.classList.toggle('visible');
                     
                     if (textBox.classList.contains('visible')) {
@@ -556,12 +531,6 @@
                         textBox.scrollTop = 0;
                     }
                 }
-            });
-
-            // Close button functionality
-            closeBtn.addEventListener('click', (e) => {
-                textBox.classList.remove('visible');
-                e.stopPropagation(); // Prevent the click from triggering other handlers
             });
 
             // Prevent nav links from toggling text when clicked
