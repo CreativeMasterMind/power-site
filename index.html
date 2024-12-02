@@ -71,14 +71,16 @@
             width: 90%;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.5s ease;
+            transition: opacity 0.5s ease, transform 0.5s ease;
             cursor: pointer;
             font-family: monospace;
+            overflow-y: hidden; /* Prevent scroll when not visible */
         }
 
         .text.visible {
             opacity: 1;
             pointer-events: auto;
+            overflow-y: auto; /* Allow scroll when visible */
         }
 
         .text p {
@@ -128,6 +130,30 @@
                 right: 50%;
                 transform: translateX(50%);
             }
+
+            .text {
+                top: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                max-height: 100vh;
+                width: 90%;
+                overflow-y: auto;
+                border-radius: 0; /* Optional: Remove border radius for full-width appearance */
+                padding: 1rem; /* Optional: Adjust padding for better readability */
+            }
+
+            .text p {
+                font-size: 1rem;
+                line-height: 1.5;
+            }
+            
+            body {
+                overflow: hidden; /* Ensure body does not scroll */
+            }
+
+            .text.visible {
+                overflow-y: auto; /* Allow scrolling within text box */
+            }
         }
 
         .particle-canvas {
@@ -153,7 +179,7 @@
     <h1 class="title">POWER</h1>
     <nav>
         <a href="https://x.com/nietzsche_agi" target="_blank" id="x-link">X</a>
-        <a href="#TELEGRAM_LINK_HERE" target="_blank" id="telegram-link">Telegram</a>
+        <a href="https://t.me/+Wrpeuzx3xbkyMjYx" target="_blank" id="telegram-link">Telegram</a>
         <a href="#CONTRACT_ADDRESS_HERE" target="_blank" id="token-link">Token</a>
     </nav>
     <div class="text">
@@ -229,7 +255,8 @@
                 window.addEventListener('resize', () => this.resize());
                 this.animate();
             }
-resize() {
+
+            resize() {
                 this.canvas.width = window.innerWidth;
                 this.canvas.height = window.innerHeight;
                 this.centerX = this.canvas.width / 2;
@@ -304,7 +331,7 @@ resize() {
         class DimensionalExperience {
             constructor() {
                 this.canvas = document.getElementById('canvas');
-                this.ctx = canvas.getContext('2d');
+                this.ctx = this.canvas.getContext('2d');
                 this.title = document.querySelector('.title');
                 this.width = 0;
                 this.height = 0;
@@ -498,6 +525,11 @@ resize() {
             document.addEventListener('click', (e) => {
                 if (e.target.tagName !== 'A') {  // Ignore clicks on nav links
                     textBox.classList.toggle('visible');
+                    
+                    if (textBox.classList.contains('visible')) {
+                        // Reset scroll position to top when text box is opened
+                        textBox.scrollTop = 0;
+                    }
                 }
             });
 
